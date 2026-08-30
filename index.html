@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EAP 自動化工程師：從規範解讀到現場實體測機全工作流</title>
+    <title>EAP 自動化工程師：事前規範溝通與現場實測完整工作流</title>
     <style>
         :root {
             --primary-color: #1e3a8a;
@@ -156,46 +156,46 @@
 
 <div class="container">
     <header>
-        <h1>EAP 自動化工程師：規範解讀與測機標準工作流</h1>
-        <p>「以 Common SPEC 與 XML 模板為基礎，確保虛實點位精準對接」</p>
+        <h1>EAP 自動化工程師：事前規範溝通與現場實測完整工作流</h1>
+        <p>「從事前與廠商對齊 Common SPEC 與 XML 點位，到現場心跳與模組驗收」</p>
     </header>
 
     <!-- 階段一 -->
     <div class="phase-title">
-        <span>階段一：文件準備、共通規範與設定檔審查</span>
-        <span class="phase-time">核心：掌握 Common SPEC 與 XML 點位架構</span>
+        <span>階段一：事前與設備商溝通、規範解讀與點位對齊</span>
+        <span class="phase-time">核心：用 Common SPEC 與 XML 建立統一語言</span>
     </div>
 
     <ul class="step-list">
         <li class="step-item">
             <span class="step-num">Step 1</span>
-            <div class="step-name">共通通訊規範（PDF）與通訊設定檔（XML）解析</div>
+            <div class="step-name">事前會議：與設備商核對共通規範（PDF）與通訊設定檔（XML）</div>
             <div class="tag-container">
                 <span class="tag tag-tool">工具：Common SPEC PDF / PLC_Pattern.xml / IO Mapping (Excel)</span>
-                <span class="tag tag-owner">重點：確認雙方術語與資料型態一致</span>
+                <span class="tag tag-owner">主導：EAP 工程師引導設備廠商</span>
             </div>
             <div class="step-desc">
-                在測機前必須徹底讀透公司標準規範文件：
+                在機台進廠或寫程式前，必須先與廠商召開對接溝通會議：
                 <ul>
-                    <li>熟悉 Common SPEC 中的核心業務邏輯（如：Local/Remote 模式切換、歷史紀錄保留規則）。</li>
-                    <li>核對 <code>PLC_Pattern.xml</code> 中的 Event 名稱、StartAdress（如 4000 系列暫存器）與 DataType（如 short、string）。</li>
-                    <li>確認變數長度（DataLength）與對應的觸發旗標（Trigger Bit），避免資料寫入時發生錯位或亂碼。</li>
+                    <li>明確告知廠商使用公司的標準 <strong>Common SPEC（共同規範）</strong>，避免廠商用自己的邏輯亂做。</li>
+                    <li>逐項與廠商確認 <code>PLC_Pattern.xml</code> 中的 Event 名稱、StartAdress（如 4000 系列暫存器）與 DataType（short/string）。</li>
+                    <li>確認變數長度（DataLength）與觸發旗標（Trigger Bit），確保雙方認知 100% 同步。</li>
                 </ul>
             </div>
         </li>
 
         <li class="step-item">
             <span class="step-num">Step 2</span>
-            <div class="step-name">離線模擬測試（PLC Simulator + HMI 虛擬對齊）</div>
+            <div class="step-name">離線模擬測試與 Checklist 確認</div>
             <div class="tag-container">
-                <span class="tag tag-tool">工具：PLC 模擬器 / HMI 畫面</span>
-                <span class="tag tag-focus">核心：在進廠前驗證軟體與點位邏輯</span>
+                <span class="tag tag-tool">工具：PLC 模擬器 / 測試清單 (Checklist)</span>
+                <span class="tag tag-focus">核心：產出雙方認可的測試清單與沙盒驗證</span>
             </div>
             <div class="step-desc">
-                使用模擬工具提前進行軟體沙盒測試：
+                在事前溝通階段確立驗收標準：
                 <ul>
-                    <li>在模擬環境中載入 <code>PLC_Pattern.xml</code>，測試 EAP 是否能正確讀寫模擬暫存器。</li>
-                    <li>驗證各項業務功能（如：產品 MoveIn、配方下載、工單下發）的資料交換是否如預期運作。</li>
+                    <li>備妥測試前的 <strong>Checklist（包含設備名稱、功能項、版本號）</strong>[cite: 1]。</li>
+                    <li>透過 PLC 模擬器與廠商進行軟體沙盒對測，確保在進廠前就把溝通落差降到最低。</li>
                 </ul>
             </div>
         </li>
@@ -203,41 +203,41 @@
 
     <!-- 階段二 -->
     <div class="phase-title">
-        <span>階段二：現場實體測機與對點驗證</span>
-        <span class="phase-time">核心：實體心跳確認、GX Works 監控與異常防呆</span>
+        <span>階段二：現場實體測機、心跳驗證与結果判定</span>
+        <span class="phase-time">核心：實體心跳 R4070、模組對點與防呆攔截</span>
     </div>
 
     <ul class="step-list">
         <li class="step-item">
             <span class="step-num">Step 3</span>
-            <div class="step-name">實體網路層與心跳機制（Heartbeat）建立</div>
+            <div class="step-name">實體網路連線與標準心跳機制（Heartbeat）判定</div>
             <div class="tag-container">
-                <span class="tag tag-tool">工具：TCP/IP 網路連線 / GX Works 監視</span>
-                <span class="tag tag-focus">核心：地址 R4070 心跳判定</span>
+                <span class="tag tag-tool">工具：TCP/IP 網路 / GX Works 監視</span>
+                <span class="tag tag-focus">核心：地址 R4070 逾時即 NG 判定</span>
             </div>
             <div class="step-desc">
-                機台進廠後的首要通訊驗證：
+                機台進廠後的首要現場驗證：
                 <ul>
-                    <li>確認伺服器與實體 PLC 之間的網路連線暢通。</li>
-                    <li>驗證心跳機制：依規範確認 PLC 定期向地址 <strong>R4070</strong> 寫入數據，EAP 接收後進行處理並回覆。</li>
-                    <li>透過 HMI 界面狀態（如綠色連線燈號）判定通訊正常；若心跳週期超時則直接判定為 NG。</li>
+                    <li>確認網路與通訊層連線正常。</li>
+                    <li>嚴格依照規範執行心跳檢驗：<strong>PLC 每隔 60 秒向地址 R4070 寫入數據，EAP 接收後處理並回覆</strong>[cite: 1]。</li>
+                    <li>透過 HMI 界面狀態（如綠色連線燈號）判斷；若心跳數值變化週期超時，<strong>即判定為 NG，絕不憑主觀判斷</strong>[cite: 1]。</li>
                 </ul>
             </div>
         </li>
 
         <li class="step-item">
             <span class="step-num">Step 4</span>
-            <div class="step-name">分階段功能模組對點測試</div>
+            <div class="step-name">現場模組對點與數據交換驗收</div>
             <div class="tag-container">
-                <span class="tag tag-tool">工具：GX Works3 線上監控 / EAP Log 追蹤</span>
-                <span class="tag tag-owner">協同：帶領設備廠商逐步核對</span>
+                <span class="tag tag-tool">工具：GX Works3 線上監控 / EAP Log</span>
+                <span class="tag tag-owner">協同：帶領廠商逐項過測機清單</span>
             </div>
             <div class="step-desc">
-                拿著 CheckList 與 IO Mapping 文件，與廠商逐一驗收業務模組：
+                拿著 IO Mapping 與 Checklist 進行現場實測：
                 <ul>
-                    <li><strong>基礎模組</strong>：測試人員登錄、權限寫入與設備狀態讀取。</li>
-                    <li><strong>核心業務</strong>：實際測試產品 MoveIn、配方請求、配方下載與 MoveOut 結案資料回傳。</li>
-                    <li>透過 GX Works 監控 PLC 暫存器數值變化，並對照 EAP Log 確保沒有遺漏或解析錯誤。</li>
+                    <li><strong>權限與登入</strong>：驗證設備權限申請與人員上崗。</li>
+                    <li><strong>核心業務</strong>：實際觸發產品 MoveIn、配方請求與下載、MoveOut 結案資料回傳。</li>
+                    <li>透過 GX Works 監控 PLC 暫存器，並比對 EAP Log 數據，確保交互數據完全符合規範。</li>
                 </ul>
             </div>
         </li>
@@ -246,20 +246,20 @@
             <span class="step-num">Step 5</span>
             <div class="step-name">異常防呆與例外攔截驗證</div>
             <div class="tag-container">
-                <span class="tag tag-focus">核心：確保程式面對壞資料不會當機</span>
+                <span class="tag tag-focus">核心：確保依規範對比數據、嚴格防呆</span>
             </div>
             <div class="step-desc">
-                刻意測試不符合規範的極端狀況：
+                進行最終的壓力與異常測試：
                 <ul>
-                    <li>輸入空白字串、超長字體或錯誤的資料型態，驗證 EAP 端是否有做好 Try-Catch 與防呆攔截。</li>
-                    <li>確保系統在遇到異常資料時能順利記錄 Log 並跳出警報，而不會造成程式崩潰（Crash）。</li>
+                    <li>驗證系統是否能依據規範正確比對數據並攔截錯誤資料。</li>
+                    <li>確保所有測試結果均有憑有據（依據 Log 與暫存器變化），完成現場驗收。</li>
                 </ul>
             </div>
         </li>
     </ul>
 
     <footer>
-        <p>&copy; 2026 EAP 自動化工程筆記 | 規範解讀與實戰對點指南</p>
+        <p>&copy; 2026 EAP 自動化工程筆記 | 事前規範溝通與現場實測完整指南</p>
     </footer>
 </div>
 
