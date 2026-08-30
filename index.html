@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EAP 工程師：從事前溝通到現場實體測機全工作流</title>
+    <title>EAP 自動化工程師：從規範解讀到現場實體測機全工作流</title>
     <style>
         :root {
             --primary-color: #1e3a8a;
@@ -156,64 +156,46 @@
 
 <div class="container">
     <header>
-        <h1>EAP 自動化工程師：連線與測機標準工作流</h1>
-        <p>「寧可在冷氣房花 30 小時對規格，也不要在無塵室站 3 小時 Debug」</p>
+        <h1>EAP 自動化工程師：規範解讀與測機標準工作流</h1>
+        <p>「以 Common SPEC 與 XML 模板為基礎，確保虛實點位精準對接」</p>
     </header>
 
     <!-- 階段一 -->
     <div class="phase-title">
-        <span>階段一：事前溝通、規格審查與邏輯對齊</span>
-        <span class="phase-time">時程：約 2 週 ~ 2 個月（佔 70% 精力）</span>
+        <span>階段一：文件準備、共通規範與設定檔審查</span>
+        <span class="phase-time">核心：掌握 Common SPEC 與 XML 點位架構</span>
     </div>
 
     <ul class="step-list">
         <li class="step-item">
             <span class="step-num">Step 1</span>
-            <div class="step-name">通訊規格書（SPEC）談判與逐行審查</div>
+            <div class="step-name">共通通訊規範（PDF）與通訊設定檔（XML）解析</div>
             <div class="tag-container">
-                <span class="tag tag-tool">工具：Word / Excel 規格書</span>
-                <span class="tag tag-owner">主導：EAP 工程師 & 設備商</span>
+                <span class="tag tag-tool">工具：Common SPEC PDF / PLC_Pattern.xml / IO Mapping (Excel)</span>
+                <span class="tag tag-owner">重點：確認雙方術語與資料型態一致</span>
             </div>
             <div class="step-desc">
-                與設備廠商開會，定義雙方語言格式：
+                在測機前必須徹底讀透公司標準規範文件：
                 <ul>
-                    <li>確認通訊物理層版本（如：HSMS / SECS-I）。</li>
-                    <li>逐行審查 SECS Message 對應（如：S5F1 警報、S6F11 報工、S7F23 配方）。</li>
-                    <li>嚴格統一資料型態、Byte 長度與時間格式，避免收資料時產生亂碼。</li>
+                    <li>熟悉 Common SPEC 中的核心業務邏輯（如：Local/Remote 模式切換、歷史紀錄保留規則）。</li>
+                    <li>核對 <code>PLC_Pattern.xml</code> 中的 Event 名稱、StartAdress（如 4000 系列暫存器）與 DataType（如 short、string）。</li>
+                    <li>確認變數長度（DataLength）與對應的觸發旗標（Trigger Bit），避免資料寫入時發生錯位或亂碼。</li>
                 </ul>
             </div>
         </li>
 
         <li class="step-item">
             <span class="step-num">Step 2</span>
-            <div class="step-name">跨部門生產情境（Scenario）流程整合</div>
-            <div class="tag-container">
-                <span class="tag tag-tool">工具：Visio / 流程圖軟體</span>
-                <span class="tag tag-owner">主導：EAP、製程(PIE)、製造(MFG)、MES 團隊</span>
-            </div>
-            <div class="step-desc">
-                扮演外交官角色，整合全廠自動化需求：
-                <ul>
-                    <li>向製程與產線確認機台需上傳哪些關鍵參數（FDC 資料收集點）。</li>
-                    <li>與 MES 團隊對齊新機台進廠後的工單扣帳與配方驗證（Validation）邏輯。</li>
-                    <li>將整體生產邏輯（如：讀取條碼 ➔ 檢查 MES ➔ 下載配方 ➔ 開工）繪製成標準 Scenario。</li>
-                </ul>
-            </div>
-        </li>
-
-        <li class="step-item">
-            <span class="step-num">Step 3</span>
             <div class="step-name">離線模擬測試（PLC Simulator + HMI 虛擬對齊）</div>
             <div class="tag-container">
-                <span class="tag tag-tool">工具：SECSIM Pro / ITT / PLC 模擬器 & HMI 畫面</span>
-                <span class="tag tag-focus">核心：將抽象文字轉化為視覺化訊號</span>
+                <span class="tag tag-tool">工具：PLC 模擬器 / HMI 畫面</span>
+                <span class="tag tag-focus">核心：在進廠前驗證軟體與點位邏輯</span>
             </div>
             <div class="step-desc">
-                在實體機台尚未進廠或組裝前，進行純軟體通訊與邏輯驗證：
+                使用模擬工具提前進行軟體沙盒測試：
                 <ul>
-                    <li>設備商在模擬器上操作 HMI 按鈕，觸發模擬 PLC 點位變更。</li>
-                    <li>EAP 工程師透過模擬工具，驗證當 HMI 動作時，發出的 SECS 封包是否符合預期。</li>
-                    <li>在此階段抓出 90% 以上的軟體邏輯漏洞，作為雙方「驗收的技術合約」。</li>
+                    <li>在模擬環境中載入 <code>PLC_Pattern.xml</code>，測試 EAP 是否能正確讀寫模擬暫存器。</li>
+                    <li>驗證各項業務功能（如：產品 MoveIn、配方下載、工單下發）的資料交換是否如預期運作。</li>
                 </ul>
             </div>
         </li>
@@ -221,78 +203,63 @@
 
     <!-- 階段二 -->
     <div class="phase-title">
-        <span>階段二：現場實體測機與虛實整合驗證</span>
-        <span class="phase-time">時程：約 1 ~ 3 小時（佔 30% 精力，若事前準備扎實）</span>
+        <span>階段二：現場實體測機與對點驗證</span>
+        <span class="phase-time">核心：實體心跳確認、GX Works 監控與異常防呆</span>
     </div>
 
     <ul class="step-list">
         <li class="step-item">
-            <span class="step-num">Step 4</span>
-            <div class="step-name">實體網路層與通訊層握手（Ping & SECS Connect）</div>
+            <span class="step-num">Step 3</span>
+            <div class="step-name">實體網路層與心跳機制（Heartbeat）建立</div>
             <div class="tag-container">
-                <span class="tag tag-tool">工具：CMD Ping / SECS Terminal Log</span>
-                <span class="tag tag-owner">地點：無塵室實體機台旁</span>
+                <span class="tag tag-tool">工具：TCP/IP 網路連線 / GX Works 監視</span>
+                <span class="tag tag-focus">核心：地址 R4070 心跳判定</span>
             </div>
             <div class="step-desc">
-                機台進廠組裝完畢、網路線就位後的初始連線：
+                機台進廠後的首要通訊驗證：
                 <ul>
-                    <li>執行 Ping 測試，確保 EAP 伺服器與現場實體 PLC 之間的 IP、Port 網路畅通。</li>
-                    <li>發送 S1F13 / S1F14 建立 SECS 連線，確認機台狀態成功切換為 <strong>Online Remote</strong>。</li>
+                    <li>確認伺服器與實體 PLC 之間的網路連線暢通。</li>
+                    <li>驗證心跳機制：依規範確認 PLC 定期向地址 <strong>R4070</strong> 寫入數據，EAP 接收後進行處理並回覆。</li>
+                    <li>透過 HMI 界面狀態（如綠色連線燈號）判定通訊正常；若心跳週期超時則直接判定為 NG。</li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="step-item">
+            <span class="step-num">Step 4</span>
+            <div class="step-name">分階段功能模組對點測試</div>
+            <div class="tag-container">
+                <span class="tag tag-tool">工具：GX Works3 線上監控 / EAP Log 追蹤</span>
+                <span class="tag tag-owner">協同：帶領設備廠商逐步核對</span>
+            </div>
+            <div class="step-desc">
+                拿著 CheckList 與 IO Mapping 文件，與廠商逐一驗收業務模組：
+                <ul>
+                    <li><strong>基礎模組</strong>：測試人員登錄、權限寫入與設備狀態讀取。</li>
+                    <li><strong>核心業務</strong>：實際測試產品 MoveIn、配方請求、配方下載與 MoveOut 結案資料回傳。</li>
+                    <li>透過 GX Works 監控 PLC 暫存器數值變化，並對照 EAP Log 確保沒有遺漏或解析錯誤。</li>
                 </ul>
             </div>
         </li>
 
         <li class="step-item">
             <span class="step-num">Step 5</span>
-            <div class="step-name">實體空機測試（GX Works3 梯形圖與 EAP Log 對時）</div>
+            <div class="step-name">異常防呆與例外攔截驗證</div>
             <div class="tag-container">
-                <span class="tag tag-tool">工具：GX Works3 (三菱體系) / EAP Terminal Log</span>
-                <span class="tag tag-focus">核心：工程軟體與實體硬體對時</span>
+                <span class="tag tag-focus">核心：確保程式面對壞資料不會當機</span>
             </div>
             <div class="step-desc">
-                不放任何實體物料，讓機台空跑自動化流程：
+                刻意測試不符合規範的極端狀況：
                 <ul>
-                    <li>設備廠商工程師使用 <strong>GX Works3</strong> 線上監控（Online Monitor）實體 PLC 梯形圖。</li>
-                    <li>EAP 工程師緊盯筆電的 <strong>EAP Log 視窗</strong>，對應 PLC 點位觸發時，SECS 封包的收發時序。</li>
-                    <li>在現場微調 EAP 的<strong>等待逾時時間（Timeout 設定）</strong>，因實體機械手臂、氣壓閥作動皆有物理延遲。</li>
-                </ul>
-            </div>
-        </li>
-
-        <li class="step-item">
-            <span class="step-num">Step 6</span>
-            <div class="step-name">安全防錯機制硬體測試（Interlock 破壞性測試）</div>
-            <div class="tag-container">
-                <span class="tag tag-focus">重點：防撞機、防工安意外、異常鎖機</span>
-            </div>
-            <div class="step-desc">
-                故意製造異常，驗證 EAP 與機台的防錯安全網是否正常：
-                <ul>
-                    <li>在機台加工運作到一半時，人為拔掉網路線，確認 EAP 系統與機台能立刻進入安全鎖定。</li>
-                    <li>觸發異常警報（Alarm），驗證機台是否會立即停止動作（Interlock），不准下一批貨生產。</li>
-                </ul>
-            </div>
-        </li>
-
-        <li class="step-item">
-            <span class="step-num">Step 7</span>
-            <div class="step-name">實體帶料生產測試（Go-Live 最終驗收）</div>
-            <div class="tag-container">
-                <span class="tag tag-owner">參與人員：全體動員（EAP, PLC, MFG, PIE）</span>
-            </div>
-            <div class="step-desc">
-                投入真正的產品或測試片（如晶圓、面板），走完最後的完整自動化生產：
-                <ul>
-                    <li>產品進站 ➔ 機台實體 BCR 掃描條碼 ➔ EAP 接收並拋轉 MES 進行 Validation ➔ 下載正確配方。</li>
-                    <li>實體加工生產 ➔ 加工完畢 ➔ 收集製程數據（FDC） ➔ MES 自動過帳報工。</li>
-                    <li>全流程無誤後，簽字驗收，機台正式移交產線投入量產。</li>
+                    <li>輸入空白字串、超長字體或錯誤的資料型態，驗證 EAP 端是否有做好 Try-Catch 與防呆攔截。</li>
+                    <li>確保系統在遇到異常資料時能順利記錄 Log 並跳出警報，而不會造成程式崩潰（Crash）。</li>
                 </ul>
             </div>
         </li>
     </ul>
 
     <footer>
-        <p>&copy; 2026 EAP 自動化整合思維 | 虛實整合與跨部門溝通指南</p>
+        <p>&copy; 2026 EAP 自動化工程筆記 | 規範解讀與實戰對點指南</p>
     </footer>
 </div>
 
